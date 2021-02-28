@@ -10,7 +10,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="35"></RowDefinition>
             <RowDefinition Height="5"></RowDefinition>
-            <RowDefinition Height="35"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="5"></RowDefinition>
             <RowDefinition Height="35"></RowDefinition>
@@ -26,16 +25,21 @@
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" FontSize="18" 
                Background="SteelBlue" Foreground="White" MouseDown="lblTitle_MouseDown">Application Logs</Label>
 
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
-            <!--<DatePicker SelectedDate="{Binding DateFrom}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0, 0, 10, 0" Width="150" />-->
-            <!--<DatePicker SelectedDate="{Binding DateTo}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0, 0, 10, 0" Width="150" />-->
-            <Button VerticalAlignment="Center" HorizontalAlignment="Left" Click="btnLoad_Click" Foreground="White" Content="Load" />
-            <Label Margin="10, 0, 0, 0" Content="{Binding Message}" />
-        </StackPanel>
+        <Border Grid.Row="2" Grid.Column="1" BorderBrush="Gray" BorderThickness="1">
+            <ListView ItemsSource="{Binding Logs}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListView>
+        </Border>
 
-        <ListView Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Logs}" />
+        <Label Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Content="{Binding Message}" />
 
-        <Button Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Click="btnClose_Click" Style="{StaticResource MaterialDesignRaisedLightButton}">Close</Button>
+        <Button Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Click="btnClose_Click" Style="{StaticResource MaterialDesignRaisedLightButton}">Close</Button>
 
     </Grid>
 

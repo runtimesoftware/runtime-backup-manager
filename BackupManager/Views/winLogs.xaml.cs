@@ -13,25 +13,12 @@ namespace BackupManager
 
         //Private Fields
         private List<string> _logs;
-        //private DateTime _dateFrom;
-        //private DateTime _dateTo;
         private string _message;
-
-        ////ViewModels
-        //public class LogViewModel
-        //{
-        //    public DateTime _logtime { get; set; }
-        //    public string DateTime { get; set; }
-        //    public string LogType { get; set; }
-        //    public string Description { get; set; }
-        //}
 
         //Public Properties
         public List<string> Logs { get { return _logs; } set { _logs = value; RaisePropertyChanged("Logs"); } }
         public string Message { get { return _message; } set { _message = value; RaisePropertyChanged("Message"); } }
-        //public DateTime DateFrom { get { return _dateFrom; } set { _dateFrom = value; RaisePropertyChanged("DateFrom"); } }
-        //public DateTime DateTo { get { return _dateTo; } set { _dateTo = value; RaisePropertyChanged("DateTo"); } }
-
+   
         #region PropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -62,47 +49,30 @@ namespace BackupManager
             InitializeComponent();
             this.DataContext = this;
 
-            //DateFrom = DateTime.Now;
-            //DateTo = DateTime.Now;
+            Message = "";
+
+            try
+            {
+                Logs = LogHelper.GetLogs();
+                if (Logs == null || Logs.Count == 0)
+                {
+                    Message = "No log entires found for the day.";
+                }
+                else if (Logs.Count > 99)
+                {
+                    Message = "Recent 100 items are shown. Check actual log file for full details.";
+                }
+            }
+            catch (Exception ex)
+            {
+                Message = Functions.GetErrorFromException(ex);
+            }
         }
 
         //To enable dragging window from title area
         private void lblTitle_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left) DragMove();
-        }
-
-        private void btnLoad_Click(object sender, RoutedEventArgs e)
-        {
-
-            Message = "";
-
-            //if (DateFrom.Year < 1900)
-            //{
-            //    Message = "Please select Date From";
-            //    return;
-            //}
-
-            //if (DateTo.Year < 1900)
-            //{
-            //    Message = "Please select Date From";
-            //    return;
-            //}
-
-            //DateFrom = DateFrom.Date;
-            //DateTo = DateTo.Date.AddDays(1).AddSeconds(-1);
-
-            try
-            {
-
-                Logs = LogHelper.GetLogs();
-                RaisePropertyChanged("Logs");
-
-            }
-            catch (Exception ex)
-            {
-                Message = Functions.GetErrorFromException(ex);
-            }
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)

@@ -9,8 +9,6 @@ namespace BackupManager.Helpers
     public class LogHelper
     {
 
-        protected readonly static string configFileName = "log.txt";
-
         /// <summary>
         /// Returns recent 100 logs
         /// </summary>
@@ -20,21 +18,23 @@ namespace BackupManager.Helpers
             try
             {
 
+                string logFileName = DateTime.Today.ToString("yyyy-MM-dd", DateTimeFormatInfo.InvariantInfo) + ".txt";
                 string tmpPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
                 EnVar.AppWorkingPath = Path.Combine(tmpPath, "Runtime Backup Manager");
-                string configFile = Path.Combine(EnVar.AppWorkingPath, configFileName);
+                string logFilePath = Path.Combine(EnVar.AppWorkingPath, logFileName);
 
-                //-- TODO
-                //This is huge performance penalty as entire file will be read in memory
-                //We need to split files by date and allow log view for one date only
-                int lineNo = 0;
                 List<string> output = new List<string>();
-                using(StreamReader reader = new StreamReader(configFile))
+
+                if (File.Exists(logFilePath))
                 {
-                    while (lineNo < 100 || reader.EndOfStream)
+                    int lineNo = 0;
+                    using (StreamReader reader = new StreamReader(logFilePath))
                     {
-                        output.Add(reader.ReadLine());
-                        lineNo++;
+                        while (lineNo < 100 && !reader.EndOfStream)
+                        {
+                            output.Add(reader.ReadLine());
+                            lineNo++;
+                        }
                     }
                 }
 
@@ -49,15 +49,19 @@ namespace BackupManager.Helpers
 
         public static void LogMessage(string logType, string logDescription)
         {
+
+            string logFileName = DateTime.Today.ToString("yyyy-MM-dd", DateTimeFormatInfo.InvariantInfo) + ".txt";
+            string tmpPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            EnVar.AppWorkingPath = Path.Combine(tmpPath, "Runtime Backup Manager");
+            string logFilePath = Path.Combine(EnVar.AppWorkingPath, logFileName);
+
             try
             {
-                string configFile = Path.Combine(EnVar.AppWorkingPath, configFileName);
-
                 string lineToWrite = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss", DateTimeFormatInfo.InvariantInfo) +
                                      " | " + logType + " | " + logDescription;
 
                 //append at end of log file already exist
-                using (StreamWriter writer = File.AppendText(configFile))
+                using (StreamWriter writer = File.AppendText(logFilePath))
                 {
                     writer.WriteLine(lineToWrite);
                 }
