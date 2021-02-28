@@ -56,6 +56,3 @@ Source: "src\Zstandard.Net.dll"; DestDir: "{userpf}\Runtime Software\Runtime Bac
 [Icons]
 Name: "{group}\Runtime Backup Manager"; Filename: "{userpf}\Runtime Software\Runtime Backup Manager\rmb.exe"
 Name: "{commondesktop}\Runtime Backup Manager"; Filename: "{userpf}\Runtime Software\Runtime Backup Manager\rbm.exe";
- 
-[Run]
-Filename: "{userpf}\Runtime Software\Runtime Backup Manager\rbm.exe"; Description: "{cm:LaunchProgram,Runtime Backup Manager}"; Flags: nowait postinstall skipifsilent
