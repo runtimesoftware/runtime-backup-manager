@@ -59,7 +59,7 @@
             <Ellipse Width="20" Height="20" Fill="{Binding ServiceColor}" />
             <Label VerticalAlignment="Center" Width="250" FontWeight="DemiBold" Content="{Binding ServiceStatus}" />
             <Button x:Name="btnInstallService" Click="btnInstallService_Click" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignRaisedLightButton}">Install</Button>
-            <Button x:Name="btnUnInstallService" Click="btnUnInstallService_Click" Visibility="Collapsed" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignRaisedLightButton}">Uninstall</Button>
+            <Button x:Name="btnUnInstallService" Click="btnUninstallService_Click" Visibility="Collapsed" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignRaisedLightButton}">Uninstall</Button>
         </StackPanel>
 
         <TextBlock x:Name="lblMessage" Grid.Row="14" Grid.Column="2" HorizontalAlignment="Left" Text="{Binding Message}" TextWrapping="Wrap" />

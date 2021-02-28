@@ -11,16 +11,24 @@ using System.Windows;
 namespace BackupManager.Helpers
 {
 
+    /// <summary>
+    /// This class is consumed by BackupService
+    /// </summary>
     public class BackupHelper
     {
 
-        /// <summary>
-        /// This class is called from BackupService direclty.
-        /// Since no app launch is involved from app.cs, the environment is also not initialized. 
-        /// </summary>
-        public BackupHelper()
-        {
+        private AWSS3Setting awsS3Setting;
+        private EmailSetting emailSetting;
+        private GeneralSetting generalSetting;
 
+        List<MSSQLBackup> mssqlBackups = new List<MSSQLBackup>();
+        List<MYSQLBackup> mysqlBackups = new List<MYSQLBackup>();
+        List<FolderBackup> folderBackups = new List<FolderBackup>();
+
+        public async Task ExecuteBackups()
+        {
+            //Read current configuration
+            //As user may have updated settings
             try
             {
 
@@ -48,21 +56,10 @@ namespace BackupManager.Helpers
             }
             catch (Exception ex)
             {
-                LogHelper.LogMessage("Error", "BackupHelper Constructor Exception: " + ex.Message);
+                LogHelper.LogMessage("Error", "Unable to load backup settings." + Functions.GetErrorFromException(ex));
+                return;
             }
-        }
 
-        private AWSS3Setting awsS3Setting;
-        private EmailSetting emailSetting;
-        private GeneralSetting generalSetting;
-
-        List<MSSQLBackup> mssqlBackups = new List<MSSQLBackup>();
-        List<MYSQLBackup> mysqlBackups = new List<MYSQLBackup>();
-        List<FolderBackup> folderBackups = new List<FolderBackup>();
-
-        public async Task ExecuteBackups()
-        {
-            
             try
             {
                 int Hour = DateTime.Now.Hour;

@@ -190,6 +190,16 @@ namespace BackupManager.Views
                 ServiceController service = new ServiceController("Runtime Backup Service", ".");
                 if (service != null && service.Status != ServiceControllerStatus.Running) service.Start();
 
+            }
+            catch (Exception ex)
+            {
+                string message = Functions.GetErrorFromException(ex);
+                MessageBox.Show("Failed to install the service. \n" + message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            try
+            {
+
                 ServiceStatus = "Service is installed";
                 ServiceColor = "Green";
 
@@ -208,11 +218,12 @@ namespace BackupManager.Views
             catch (Exception ex)
             {
                 string message = Functions.GetErrorFromException(ex);
-                MessageBox.Show("Failed to install the service. \n" + message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Failed to update service status. \n" + message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
 
-        private void btnUnInstallService_Click(object sender, RoutedEventArgs e)
+        private void btnUninstallService_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -232,6 +243,18 @@ namespace BackupManager.Views
                 Process processDelete = new Process() { StartInfo = startInfoDelete };
                 processDelete.Start();
 
+            }
+            catch (Exception ex)
+            {
+                string message = Functions.GetErrorFromException(ex);
+                MessageBox.Show("Failed to uninstall the service. \n" + message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            //update status anyways
+            //sometimes service is already uninstalled and above attempt will fail. So need to update status
+            try
+            {
+
                 ServiceStatus = "Background service is not installed";
                 ServiceColor = "LightGray";
 
@@ -239,7 +262,7 @@ namespace BackupManager.Views
                 GeneralSetting generalSetting = generalHelper.GetConfig();
                 if (generalSetting != null)
                 {
-                    generalSetting.ServiceInstalled = true;
+                    generalSetting.ServiceInstalled = false;
                     generalHelper.SaveConfig(generalSetting);
                 }
 
@@ -250,8 +273,9 @@ namespace BackupManager.Views
             catch (Exception ex)
             {
                 string message = Functions.GetErrorFromException(ex);
-                MessageBox.Show("Failed to install the service. \n" + message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }   
+                MessageBox.Show("Failed to update service status. \n" + message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
