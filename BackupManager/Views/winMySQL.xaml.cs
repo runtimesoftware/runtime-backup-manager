@@ -1,10 +1,8 @@
 ﻿using BackupManager.Helpers;
 using System;
 using System.Windows;
-using MySql.Data.MySqlClient;
 using System.ComponentModel;
 using BackupManager.Model;
-using System.Threading.Tasks;
 using System.IO;
 using BackupManager.Classes;
 

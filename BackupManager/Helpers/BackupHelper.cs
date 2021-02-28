@@ -83,7 +83,7 @@ namespace BackupManager.Helpers
                         if (backup.BackupTime.Hour == Hour && backup.BackupTime.Minute == Minute)
                         {
                             MSSQLHelper helper = new MSSQLHelper(backup.ServerName, backup.DatabaseName, backup.Username, backup.Password);
-                            string fileName = Path.Combine(generalSetting.LocalFolder, backup.DatabaseName + "_" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".bak");
+                            string fileName = Path.Combine(generalSetting.LocalFolder, DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + "_" + backup.DatabaseName + ".bak");
                             bool Result = await helper.ExceuteCommand("BACKUP DATABASE " + backup.DatabaseName + " TO DISK=@filename", 
                                                                      new System.Data.SqlClient.SqlParameter[] { new System.Data.SqlClient.SqlParameter { ParameterName = "@filename", Value = fileName} });
 
@@ -145,7 +145,7 @@ namespace BackupManager.Helpers
                         if (backup.BackupTime.Hour == Hour && backup.BackupTime.Minute == Minute)
                         {
                             MYSQLHelper helper = new MYSQLHelper(backup.ServerName, backup.DatabaseName, backup.Username, backup.Password);
-                            string fileName = Path.Combine(generalSetting.LocalFolder, backup.DatabaseName + "_" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".sqldump");
+                            string fileName = Path.Combine(generalSetting.LocalFolder, DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + "_" + backup.DatabaseName + ".sqldump");
                             bool Result = await helper.BackupDatabase(fileName);
 
                             if (Result == true)
@@ -215,7 +215,7 @@ namespace BackupManager.Helpers
                             {
                                 string backupFolderName = Path.GetFileName(backup.FolderName);
 
-                                string destinationPath = Path.Combine(generalSetting.LocalFolder, backupFolderName + "-" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".zip");
+                                string destinationPath = Path.Combine(generalSetting.LocalFolder, DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + "_" + backupFolderName + ".zip");
                                 ZipFile.CreateFromDirectory(backup.FolderName, destinationPath, CompressionLevel.Optimal, true);
 
                                 //log Message
