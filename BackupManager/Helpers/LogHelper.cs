@@ -19,6 +19,9 @@ namespace BackupManager.Helpers
         {
             try
             {
+
+                string tmpPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+                EnVar.AppWorkingPath = Path.Combine(tmpPath, "Runtime Backup Manager");
                 string configFile = Path.Combine(EnVar.AppWorkingPath, configFileName);
 
                 //-- TODO

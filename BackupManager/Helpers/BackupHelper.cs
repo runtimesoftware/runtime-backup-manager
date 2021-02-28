@@ -98,7 +98,7 @@ namespace BackupManager.Helpers
                                     string body = "Dear Admin, \n\n" +
                                         "This is to notify you that following scheduled task has completed successfully:\n" +
                                         "Backup Type: MSSQL\n" + 
-                                        "Database Name: " + backup.DatabaseName + "'\n" +
+                                        "Database Name: " + backup.DatabaseName + "\n" +
                                         "Backup Location: Local\n" + 
                                         "Backup Time: " + DateTime.Now.ToString("MMM dd, yyyy HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + ".\n\n" +
                                         "Runtime Backup Manager";
@@ -121,7 +121,7 @@ namespace BackupManager.Helpers
                                     string body = "Dear Admin, \n\n" +
                                         "This is to notify you that following scheduled task has failed:\n" +
                                         "Backup Type: MSSQL\n" +
-                                        "Database Name: " + backup.DatabaseName + "'\n" +
+                                        "Database Name: " + backup.DatabaseName + "\n" +
                                         "Backup Location: Local\n" +
                                         "Backup Time: " + DateTime.Now.ToString("MMM dd, yyyy HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + ".\n\n" +
                                         "Runtime Backup Manager";
@@ -159,7 +159,7 @@ namespace BackupManager.Helpers
                                     string body = "Dear Admin, \n\n" +
                                         "This is to notify you that following scheduled task has completed successfully:\n" +
                                         "Backup Type: MySQL\n" +
-                                        "Database Name: " + backup.DatabaseName + "'\n" +
+                                        "Database Name: " + backup.DatabaseName + "\n" +
                                         "Backup Location: Local\n" +
                                         "Backup Time: " + DateTime.Now.ToString("MMM dd, yyyy HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + ".\n\n" +
                                         "Runtime Backup Manager";
@@ -182,7 +182,7 @@ namespace BackupManager.Helpers
                                     string body = "Dear Admin, \n\n" +
                                         "This is to notify you that following backup task has failed:\n" +
                                         "Backup Type: MySQL\n" +
-                                        "Database Name: " + backup.DatabaseName + "'\n" +
+                                        "Database Name: " + backup.DatabaseName + "\n" +
                                         "Backup Location: Local\n" +
                                         "Backup Time: " + DateTime.Now.ToString("MMM dd, yyyy HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + ".\n\n" +
                                         "Runtime Backup Manager";
@@ -227,7 +227,7 @@ namespace BackupManager.Helpers
                                     string body = "Dear Admin, \n\n" +
                                         "This is to notify you that following backup task has completed successfully:\n" +
                                         "Backup Type: Folder\n" +
-                                        "Folder Name: " + backup.FolderName + "'\n" +
+                                        "Folder Name: " + backup.FolderName + "\n" +
                                         "Backup Location: Local\n" +
                                         "Backup Time: " + DateTime.Now.ToString("MMM dd, yyyy HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + ".\n\n" +
                                         "Runtime Backup Manager";
@@ -253,7 +253,7 @@ namespace BackupManager.Helpers
                                     string body = "Dear Admin, \n\n" +
                                         "This is to notify you that following backup task has failed:\n" +
                                         "Backup Type: Folder\n" +
-                                        "Folder Name: " + backup.FolderName + "'\n" +
+                                        "Folder Name: " + backup.FolderName + "\n" +
                                         "Backup Location: Local\n" +
                                         "Backup Time: " + DateTime.Now.ToString("MMM dd, yyyy HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + ".\n\n" +
                                         "Runtime Backup Manager";
@@ -289,7 +289,7 @@ namespace BackupManager.Helpers
                                 {
                                     string body = "Dear Admin, \n\n" +
                                         "This is to notify you that following backup task has completed successfully:\n" +
-                                        "File Name: " + file + "'\n" +
+                                        "File Name: " + file + "\n" +
                                         "Backup Location: Remote\n" +
                                         "Backup Time: " + DateTime.Now.ToString("MMM dd, yyyy HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + ".\n\n" +
                                         "Runtime Backup Manager";
@@ -311,7 +311,7 @@ namespace BackupManager.Helpers
                                 {
                                     string body = "Dear Admin, \n\n" +
                                         "This is to notify you that following backup task has failed:\n" +
-                                        "File Name: " + file + "'\n" +
+                                        "File Name: " + file + "\n" +
                                         "Backup Location: Remote\n" +
                                         "Backup Time: " + DateTime.Now.ToString("MMM dd, yyyy HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + ".\n\n" +
                                         "Runtime Backup Manager";
