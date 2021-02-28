@@ -51,7 +51,7 @@ namespace BackupManager.Helpers
                 string configFile = Path.Combine(EnVar.AppWorkingPath, configFileName);
 
                 string lineToWrite = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss", DateTimeFormatInfo.InvariantInfo) +
-                                     " - " + logType + " | " + logDescription;
+                                     " | " + logType + " | " + logDescription;
 
                 //append at end of log file already exist
                 using (StreamWriter writer = File.AppendText(configFile))
