@@ -143,7 +143,7 @@ namespace BackupManager
 
                 MYSQLHelper helper = new MYSQLHelper(ServerName, DatabaseName, Username, Password);
 
-                string tempFile = Path.Combine(EnVar.AppTempPath, Functions.RandomString(10) + ".sqldump");
+                string tempFile = Path.Combine(EnVar.AppTempPath, Functions.RandomString(10) + "_test_backup.sqldump");
                 bool Result = await helper.BackupDatabase(tempFile);
                                 
                 btnSave.IsEnabled = true;

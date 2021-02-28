@@ -73,9 +73,9 @@
                               CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False"
                               IsReadOnly="True" ItemsSource="{Binding MySQLList}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Server" Width="120" Binding="{Binding Server}" />
-                            <DataGridTextColumn Header="Database" Width="120" Binding="{Binding Database}" />
-                            <DataGridTextColumn Header="Backup Schedule" Width="*" Binding="{Binding Schedule}" />
+                            <DataGridTextColumn Header="Server" Width="120" Binding="{Binding ServerName}" />
+                            <DataGridTextColumn Header="Database" Width="120" Binding="{Binding DatabaseName}" />
+                            <DataGridTextColumn Header="Backup Schedule" Width="*" Binding="{Binding BackupTime}" />
                             <DataGridTextColumn Header="Last Backup" Width="150" Binding="{Binding LastBackup}" />
                             <DataGridHyperlinkColumn CanUserSort="False" Header="Edit" Width="80" MinWidth="50" ContentBinding="{Binding Edit}">
                                 <DataGridHyperlinkColumn.ElementStyle>

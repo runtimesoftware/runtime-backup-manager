@@ -126,7 +126,7 @@ namespace BackupManager.Helpers
 
             try
             {
-                string constring = "server=" + ServerName + ";database=" + DatabaseName +";user=" + Username + ";pwd=" + Password;
+                string constring = "server=" + ServerName + ";database=" + DatabaseName +";user=" + Username + ";pwd=" + Password + ";convert zero datetime=True";
                 using (MySqlConnection conn = new MySqlConnection(constring))
                 {
                     using (MySqlCommand cmd = new MySqlCommand())

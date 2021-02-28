@@ -278,6 +278,7 @@ namespace BackupManager.Helpers
 
                         foreach (var file in Directory.GetFiles(generalSetting.LocalFolder))
                         {
+
                             bool Result = await helper.UploadToS3Async(file, awsS3Setting.DeleteAfterBackup);
                             if (Result == true)
                             {
@@ -298,6 +299,23 @@ namespace BackupManager.Helpers
                                     if (emailSuccess == false)
                                     {
                                         LogHelper.LogMessage("Error", "E-Mail sending failed. " + emailHelper.ResultMessage);
+                                    }
+                                }
+
+                                //Move this file to 'Uploaded' folder else it will be uploaded again on next run
+                                //if there is no delete policy in place or delete after > 1 day
+                                //call only if immediate delete is not enabled
+                                if (awsS3Setting.DeleteAfterBackup == false)
+                                {
+                                    try
+                                    {
+                                        string uploadedFolder = Path.Combine(generalSetting.LocalFolder, "Uploaded");
+                                        if (!Directory.Exists(uploadedFolder)) Directory.CreateDirectory(uploadedFolder);
+                                        File.Move(file, Path.Combine(uploadedFolder, Path.GetFileName(file)));
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        LogHelper.LogMessage("Error", "Failed to move file to 'Uploaded' folder. " + Functions.GetErrorFromException(ex));
                                     }
                                 }
                             }
