@@ -1,0 +1,28 @@
+﻿<Window x:Class="BackupManager.Views.winSplash"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Loading..." Height="250" Width="600" 
+        WindowStartupLocation="CenterScreen" WindowStyle="None" BorderBrush="SteelBlue"
+        ResizeMode="NoResize" BorderThickness="1" Loaded="Window_Loaded">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" x:Name="lblVersion" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="10" Content="Version: -.-"></Label>
+        <Image Grid.Row="1" Grid.Column="0" Source="../Resources/runtime-logo-square.jpg" Margin="0, 0, 0, 0" Width="100" Height="100" />
+        <Label Grid.Row="2" Grid.Column="0" FontSize="18" Foreground="DodgerBlue" HorizontalAlignment="Center" Content="Server Backup Manager" />
+        <Label Grid.Row="3" Grid.Column="0" x:Name="lblStatus" HorizontalAlignment="Center" Content="Loading..." />
+
+    </Grid>
+
+</Window>

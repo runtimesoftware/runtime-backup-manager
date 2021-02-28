@@ -1,0 +1,42 @@
+﻿<Window x:Class="BackupManager.winLogs"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        Title="Application Logs" Height="550" Width="680" ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" 
+        BorderThickness="1" BorderBrush="SteelBlue" FontSize="14">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" FontSize="18" 
+               Background="SteelBlue" Foreground="White" MouseDown="lblTitle_MouseDown">Application Logs</Label>
+
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+            <!--<DatePicker SelectedDate="{Binding DateFrom}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0, 0, 10, 0" Width="150" />-->
+            <!--<DatePicker SelectedDate="{Binding DateTo}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0, 0, 10, 0" Width="150" />-->
+            <Button VerticalAlignment="Center" HorizontalAlignment="Left" Click="btnLoad_Click" Foreground="White" Content="Load" />
+            <Label Margin="10, 0, 0, 0" Content="{Binding Message}" />
+        </StackPanel>
+
+        <ListView Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Logs}" />
+
+        <Button Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Click="btnClose_Click" Style="{StaticResource MaterialDesignRaisedLightButton}">Close</Button>
+
+    </Grid>
+
+</Window>

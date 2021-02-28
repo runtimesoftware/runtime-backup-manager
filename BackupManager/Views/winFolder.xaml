@@ -1,0 +1,48 @@
+﻿<Window x:Class="BackupManager.winFolder"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Runtime Attendance Sync" Height="220" Width="600" FontSize="14" ShowInTaskbar="True"
+        WindowStartupLocation="CenterScreen" WindowStyle="None" 
+        ResizeMode="NoResize" BorderThickness="1" BorderBrush="SteelBlue">
+    
+    <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="45"></RowDefinition>
+            <RowDefinition Height="45"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+            <ColumnDefinition Width="150"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="100"></ColumnDefinition>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" FontSize="18" 
+               Background="SteelBlue" Foreground="White" MouseDown="Label_MouseDown">Folder Backup</Label>
+
+        <Label Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left">Select Folder</Label>
+        <TextBox Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Text="{Binding FolderName}"  />
+        <Button Grid.Row="2" Grid.Column="3" Content="Browse" HorizontalAlignment="Right" Foreground="White" Click="btnBrowse_Click"></Button>
+
+        <CheckBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" IsChecked="{Binding BackupIsActive, Mode=TwoWay}">
+            <Label Margin="-5, -2, 0, 0" Content="Enable Backup at" />
+        </CheckBox>
+        <materialDesign:TimePicker Grid.Row="3" Grid.Column="2" Width="100" HorizontalAlignment="Left" SelectedTime="{Binding BackupTime, Mode=TwoWay}" />
+
+        <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="380" TextWrapping="Wrap" Text="{Binding Message}" />
+
+        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <Button x:Name="btnCancel" HorizontalAlignment="Left" Click="btnCancel_Click" Style="{StaticResource MaterialDesignRaisedLightButton}">Cancel</Button>
+            <Button x:Name="btnSave" HorizontalAlignment="Left" Margin="10, 0, 0, 0" Click="btnSave_Click" Foreground="White">Save</Button>
+        </StackPanel>
+
+    </Grid>
+    
+</Window>
