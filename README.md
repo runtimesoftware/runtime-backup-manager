@@ -2,7 +2,6 @@
 Backups up databases and folders on a computer (usually a server), uploads them to a remote storage (optional) and sends email alerts to server administrator (optiona).
 
 Target Platform: Windows 7, 8, 10 with .NET Framework 4.6 or higher
-Language: C#
 
 # Usage instructions and available options
 01. Download the setup from Installer \ Bin folder (rsb_setup.exe)
