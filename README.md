@@ -1,9 +1,9 @@
 # Runtime Backup Manager
-Backups up databases and folders on a computer (usually a server), uploads them to a remote storage (optional) and sends email alerts to server administrator (optiona).
+Backups up databases and folders on a computer (usually a server), uploads them to a remote storage (optional) and sends email alerts to server administrator (optional).
 
-Target Platform: Windows 7, 8, 10 with .NET Framework 4.6 or higher
+Target Platforms: Windows 7, 8, 10 with .NET Framework 4.6 or higher
 
-# Usage instructions and available options
+## Usage instructions and Available Options
 01. Download the setup from Installer \ Bin folder (rsb_setup.exe)
 02. Install on the computer you would like to backup
 03. Run the software from the shortcut created on desktop 'Runtime Backup Manager'
@@ -24,3 +24,7 @@ Target Platform: Windows 7, 8, 10 with .NET Framework 4.6 or higher
 09. Initially, the status of background service will show 'Background servie is not installed'
 10. Click on 'Install' to install the service so that backup tasks can run. This is required to ensure backup tasks run in the background even when no user is logged on the system.
 11. If service is successfully installed, the status will change to 'Background service is installed'
+
+## Build Instructions for Latest version
+
+TBD
