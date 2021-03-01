@@ -19,7 +19,7 @@ SolidCompression=yes
 SignTool=signtool
 UninstallDisplayIcon={app}\rbm.exe
 UninstallDisplayName=Runtime Backup Manager
-PrivilegesRequired=lowest
+PrivilegesRequired=admin
 
 DisableReadyPage=no
 DisableReadyMemo=no
