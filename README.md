@@ -1,5 +1,5 @@
 # Runtime Backup Manager
-Backups up databases and folders on a computer (usually a server), uploads them to a remote storage (optional) and sends email alerts to server administrator (optional).
+Backs up databases and folders on a computer (usually a server), uploads them to a remote storage (optional) and sends email alerts to server administrator (optional).
 
 Target Platforms: Windows 7, 8, 10 with .NET Framework 4.6 or higher
 
@@ -23,7 +23,7 @@ Target Platforms: Windows 7, 8, 10 with .NET Framework 4.6 or higher
 08. After defining all settings, click 'Close' to come back to main screen.
 09. Initially, the status of background service will show 'Background servie is not installed'
 10. Click on 'Install' to install the service so that backup tasks can run. This is required to ensure backup tasks run in the background even when no user is logged on the system.
-11. If service is successfully installed, the status will change to 'Background service is installed'
+11. If the service is successfully installed, the status will change to 'Background service is installed'
 
 ## Build Instructions for Latest version
 
