@@ -347,22 +347,43 @@ namespace BackupManager.Helpers
                 }
 
                 //Delete local folder files after specified days
-                if (generalSetting != null && generalSetting.AutoDelete == true && generalSetting.DeleteAfterDays != null)
+                //run at 5:00 AM everyday
+                //add recommendation in docs to schedule backup tasks between before 5:00 AM everyday
+                if (Hour == 5 && Minute == 0)
                 {
-                    DateTime dateTimeBefore = DateTime.Now.AddDays((int)generalSetting.DeleteAfterDays * -1);
-                    foreach(string file in Directory.GetFiles(generalSetting.LocalFolder))
+                    if (generalSetting != null && generalSetting.AutoDelete == true && generalSetting.DeleteAfterDays != null)
                     {
-                        DateTime filetime = File.GetCreationTime(file);
-                        if (filetime < dateTimeBefore)
+                        DateTime dateTimeBefore = DateTime.Now.AddDays((int)generalSetting.DeleteAfterDays * -1);
+                        foreach (string file in Directory.GetFiles(generalSetting.LocalFolder))
                         {
-                            try
+                            DateTime filetime = File.GetCreationTime(file);
+                            if (filetime < dateTimeBefore)
                             {
-                                File.Delete(file);
-                                LogHelper.LogMessage("Info", "File deletion failed for '" + file + "'");
+                                try
+                                {
+                                    File.Delete(file);
+                                    LogHelper.LogMessage("Info", "File deletion failed for '" + file + "'");
+                                }
+                                catch (Exception ex)
+                                {
+                                    LogHelper.LogMessage("Error", "File deletion failed for '" + file + "' \n" + Functions.GetErrorFromException(ex));
+                                }
                             }
-                            catch (Exception ex)
+                        }
+                        foreach (string file in Directory.GetFiles(Path.Combine(generalSetting.LocalFolder, "Uploaded")))
+                        {
+                            DateTime filetime = File.GetCreationTime(file);
+                            if (filetime < dateTimeBefore)
                             {
-                                LogHelper.LogMessage("Error", "File deletion failed for '" + file + "' \n" + Functions.GetErrorFromException(ex));
+                                try
+                                {
+                                    File.Delete(file);
+                                    LogHelper.LogMessage("Info", "File deletion failed for '" + file + "'");
+                                }
+                                catch (Exception ex)
+                                {
+                                    LogHelper.LogMessage("Error", "File deletion failed for '" + file + "' \n" + Functions.GetErrorFromException(ex));
+                                }
                             }
                         }
                     }
