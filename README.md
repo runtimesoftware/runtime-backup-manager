@@ -1,5 +1,5 @@
 # Runtime Backup Manager
-Backups up databases and folders on a computer (usually a server), uploads them to a remote storage (optional) and sends email alerts to server administrator (optional).
+Backs up databases and folders on a computer (usually a server), uploads them to a remote storage (optional) and sends email alerts to server administrator (optional).
 
 Target Platforms: Windows 7, 8, 10 with .NET Framework 4.6 or higher
 
