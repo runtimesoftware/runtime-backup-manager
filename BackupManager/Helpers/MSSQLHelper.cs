@@ -54,8 +54,9 @@ namespace BackupManager.Helpers
                 return data;
 
             }
-            catch //(Exception ex)
+            catch (Exception ex)
             {
+                LogHelper.LogMessage("error", "Unable to load MS SQL Settings | " + Functions.GetErrorFromException(ex));
                 return null;
             }
         }
@@ -144,6 +145,7 @@ namespace BackupManager.Helpers
                         {
                             sqlCommand.Parameters.Add(parameter);
                         }
+                        sqlCommand.CommandTimeout = 600;    //10 mins
                         await sqlCommand.ExecuteNonQueryAsync();
                     }
 

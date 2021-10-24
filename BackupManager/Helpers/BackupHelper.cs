@@ -56,7 +56,7 @@ namespace BackupManager.Helpers
             }
             catch (Exception ex)
             {
-                LogHelper.LogMessage("Error", "Unable to load backup settings." + Functions.GetErrorFromException(ex));
+                LogHelper.LogMessage("Error", "Unable to load Backup settings." + Functions.GetErrorFromException(ex));
                 return;
             }
 
@@ -75,17 +75,18 @@ namespace BackupManager.Helpers
                     emailHelper = new EmailHelper(emailSetting.DisplayName, emailSetting.EmailAddress, emailSetting.Username, emailSetting.Password, emailSetting.SmtpServer, emailSetting.SmtpPort, emailSetting.SmtpSsl);
                 }
 
-                //Backup SQL
+                //Backup MSSQL
                 if (mssqlBackups != null && mssqlBackups.Count > 0)
                 {
                     foreach (MSSQLBackup backup in mssqlBackups)
                     {
                         if (backup.BackupTime.Hour == Hour && backup.BackupTime.Minute == Minute)
                         {
-                            MSSQLHelper helper = new MSSQLHelper(backup.ServerName, backup.DatabaseName, backup.Username, backup.Password);
+
+                            MSSQLHelper sqlBackupHelper = new MSSQLHelper(backup.ServerName, backup.DatabaseName, backup.Username, backup.Password);
                             string fileName = Path.Combine(generalSetting.LocalFolder, DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + "_" + backup.DatabaseName + ".bak");
-                            bool Result = await helper.ExceuteCommand("BACKUP DATABASE " + backup.DatabaseName + " TO DISK=@filename", 
-                                                                     new System.Data.SqlClient.SqlParameter[] { new System.Data.SqlClient.SqlParameter { ParameterName = "@filename", Value = fileName} });
+                            bool Result = await sqlBackupHelper.ExceuteCommand("BACKUP DATABASE " + backup.DatabaseName + " TO DISK=@filename", 
+                                          new System.Data.SqlClient.SqlParameter[] { new System.Data.SqlClient.SqlParameter { ParameterName = "@filename", Value = fileName} });
 
                             if (Result == true)
                             {
@@ -113,7 +114,7 @@ namespace BackupManager.Helpers
                             else
                             {
                                 //log message
-                                LogHelper.LogMessage("Error", "MSSQL backup failed for " + backup.DatabaseName + ". " + helper.Message);
+                                LogHelper.LogMessage("Error", "MSSQL backup failed for " + backup.DatabaseName + ". " + sqlBackupHelper.Message);
 
                                 //email config
                                 if (emailHelper != null && emailSetting.LocalFailure)
@@ -123,7 +124,8 @@ namespace BackupManager.Helpers
                                         "Backup Type: MSSQL\n" +
                                         "Database Name: " + backup.DatabaseName + "\n" +
                                         "Backup Location: Local\n" +
-                                        "Backup Time: " + DateTime.Now.ToString("MMM dd, yyyy HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + ".\n\n" +
+                                        "Backup Time: " + DateTime.Now.ToString("MMM dd, yyyy HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + ".\n" +
+                                        "Error Message: " + sqlBackupHelper.Message + "\n\n" +
                                         "Runtime Backup Manager";
 
                                     bool emailSuccess = await emailHelper.SendEmail(emailSetting.RecipientEmail, "Failure: Backup for MSSQL '" + backup.DatabaseName + "'", body);
@@ -184,7 +186,8 @@ namespace BackupManager.Helpers
                                         "Backup Type: MySQL\n" +
                                         "Database Name: " + backup.DatabaseName + "\n" +
                                         "Backup Location: Local\n" +
-                                        "Backup Time: " + DateTime.Now.ToString("MMM dd, yyyy HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + ".\n\n" +
+                                        "Backup Time: " + DateTime.Now.ToString("MMM dd, yyyy HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + ".\n" +
+                                        "Error Message: " + helper.Message + "\n\n" +
                                         "Runtime Backup Manager";
 
                                     bool emailSuccess = await emailHelper.SendEmail(emailSetting.RecipientEmail, "Failure: Backup for MySQL '" + backup.DatabaseName + "'", body);
@@ -274,12 +277,12 @@ namespace BackupManager.Helpers
                 {
                     if (generalSetting != null && Directory.Exists(generalSetting.LocalFolder))
                     {
-                        AWSS3Helper helper = new AWSS3Helper(awsS3Setting.AccessKeyId, awsS3Setting.AccessSecretKey, awsS3Setting.AWSRegion, awsS3Setting.BucketName);
+                        AWSS3Helper helper = new AWSS3Helper(awsS3Setting.AccessKeyId, awsS3Setting.AccessSecretKey, awsS3Setting.AWSRegion, awsS3Setting.BucketName, awsS3Setting.FolderName);
 
                         foreach (var file in Directory.GetFiles(generalSetting.LocalFolder))
                         {
 
-                            bool Result = await helper.UploadToS3Async(file, awsS3Setting.DeleteAfterBackup);
+                            bool Result = await helper.UploadToS3Async(file, awsS3Setting.CompressBeforeUpload, awsS3Setting.DeleteAfterBackup);
                             if (Result == true)
                             {
                                 //log Message

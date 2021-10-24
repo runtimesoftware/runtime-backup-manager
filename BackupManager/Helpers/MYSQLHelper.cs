@@ -53,8 +53,9 @@ namespace BackupManager.Helpers
                 return data;
 
             }
-            catch //(Exception ex)
+            catch (Exception ex)
             {
+                LogHelper.LogMessage("error", "Unable to load My SQL Settings | " + Functions.GetErrorFromException(ex));
                 return null;
             }
         }

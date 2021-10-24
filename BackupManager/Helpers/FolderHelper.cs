@@ -24,8 +24,9 @@ namespace BackupManager.Helpers
                 return data;
 
             }
-            catch //(Exception ex)
+            catch (Exception ex)
             {
+                LogHelper.LogMessage("error", "Unable to load Folder Settings | " + Functions.GetErrorFromException(ex));
                 return null;
             }
         }

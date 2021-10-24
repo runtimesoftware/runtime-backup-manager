@@ -15,6 +15,9 @@ namespace BackupManager.Model
         [StringLength(100)]
         public string BucketName { get; set; }
 
+        [StringLength(100)]
+        public string FolderName { get; set; }
+
         [Required]
         [StringLength(100)]
         public string AccessKeyId { get; set; }
@@ -28,6 +31,8 @@ namespace BackupManager.Model
         public string AWSRegion { get; set; }
 
         public DateTime BackupTime { get; set; }
+
+        public bool CompressBeforeUpload { get; set; }
 
         public bool DeleteAfterBackup { get; set; }
 

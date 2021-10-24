@@ -50,8 +50,9 @@ namespace BackupManager.Helpers
                 return setting;
 
             }
-            catch //(Exception ex)
+            catch (Exception ex)
             {
+                LogHelper.LogMessage("error", "Unable to load E-Mail Settings | " + Functions.GetErrorFromException(ex));
                 return null;
             }
         }

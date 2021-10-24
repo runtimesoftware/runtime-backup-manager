@@ -196,35 +196,42 @@
                             <RowDefinition Height="35"></RowDefinition>
                             <RowDefinition Height="35"></RowDefinition>
                             <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="45"></RowDefinition>
-                            <RowDefinition Height="45"></RowDefinition>
                             <RowDefinition Height="35"></RowDefinition>
-                            <RowDefinition Height="15"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="10"></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="160"></ColumnDefinition>
+                            <ColumnDefinition Width="180"></ColumnDefinition>
+                            <ColumnDefinition Width="180"></ColumnDefinition>
+                            <ColumnDefinition Width="10"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="250"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
                         <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontWeight="DemiBold" Content="AWS S3 Configuration" />
                         
                         <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="15, 0, 0, 0" Content="Bucket Name" />
-                        <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding AWSS3.BucketName, Mode=TwoWay}" Width="200"  />
-                        <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" FontSize="12" Text="Enter only bucket name not the URL" />
+                        <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding AWSS3.BucketName, Mode=TwoWay}" MaxLength="100" />
+                        <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" FontSize="12" Text="Enter only bucket name not the URL" />
 
-                        <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="15, 0, 0, 0" Content="Access Key Id" />
-                        <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding AWSS3.AccessKeyId, Mode=TwoWay}" Width="200"  />
-                        <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" FontSize="12" Text="20 digit alpha-numeric" />
+                        <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="15, 0, 0, 0" Content="Folder Name (Optional)" />
+                        <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding AWSS3.FolderName, Mode=TwoWay}" MaxLength="100"  />
+                        <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" FontSize="12" TextWrapping="Wrap"  Text="Use %Y%, %M% or %D% for year, month or day. Use forward slash (/) for sub-folders" />
 
-                        <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="15, 0, 0, 0" Content="Secret Access Key" />
-                        <TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding AWSS3.AccessSecretKey, Mode=TwoWay}" Width="200"  />
-                        <TextBlock Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" FontSize="12" Text="40 digit alpha-numeric" />
+                        <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="15, 0, 0, 0" Content="Access Key Id" />
+                        <TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding AWSS3.AccessKeyId, Mode=TwoWay}" MaxLength="100"  />
+                        <TextBlock Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" FontSize="12" Text="20 digit alpha-numeric" />
 
-                        <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="15, 0, 0, 0" Content="AWS Region" />
-                        <ComboBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding AWSS3.AWSRegion, Mode=TwoWay}" Width="200" >
+                        <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="15, 0, 0, 0" Content="Secret Access Key" />
+                        <TextBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding AWSS3.AccessSecretKey, Mode=TwoWay}" MaxLength="100"  />
+                        <TextBlock Grid.Row="4" Grid.Column="3" VerticalAlignment="Center" FontSize="12" Text="40 digit alpha-numeric" />
+
+                        <Label Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="15, 0, 0, 0" Content="AWS Region" />
+                        <ComboBox Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding AWSS3.AWSRegion, Mode=TwoWay}" >
                             <ComboBoxItem>AFSouth1</ComboBoxItem>
                             <ComboBoxItem>APEast1</ComboBoxItem>
                             <ComboBoxItem>APNortheast1</ComboBoxItem>
@@ -251,22 +258,27 @@
                             <ComboBoxItem>USWest1</ComboBoxItem>
                             <ComboBoxItem>USWest2</ComboBoxItem>
                         </ComboBox>
-                        <TextBlock Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" FontSize="12" Text="Select a region from the list" />
+                        <TextBlock Grid.Row="5" Grid.Column="3" VerticalAlignment="Center" FontSize="12" Text="Select a region from the list" />
 
-                        <CheckBox Grid.Row="5" Grid.Column="0" Margin="15, 0, 0, 0" VerticalAlignment="Center" HorizontalAlignment="Left" IsChecked="{Binding AWSS3.IsActive, Mode=TwoWay}">
+                        <CheckBox Grid.Row="6" Grid.Column="0" Margin="15, 0, 0, 0" VerticalAlignment="Center" HorizontalAlignment="Left" IsChecked="{Binding AWSS3.IsActive, Mode=TwoWay}">
                             <Label Margin="-5, -2, 0, 0" Content="Enable Backup at" />
                         </CheckBox>
-                        <materialDesign:TimePicker Grid.Row="5" Grid.Column="1" Width="100" HorizontalAlignment="Left" SelectedTime="{Binding AWSS3.BackupTime, Mode=TwoWay}" />
-                        <TextBlock Grid.Row="5" Grid.Column="2" FontSize="12" VerticalAlignment="Center" TextWrapping="Wrap" Text="All files stored in Local Backup folder will be moved to AWS S3 bucket daily at this time." />
+                        <materialDesign:TimePicker Grid.Row="6" Grid.Column="1" Width="100" HorizontalAlignment="Left" SelectedTime="{Binding AWSS3.BackupTime, Mode=TwoWay}" />
+                        <TextBlock Grid.Row="6" Grid.Column="3" FontSize="12" VerticalAlignment="Center" TextWrapping="Wrap" Text="All files stored in Local Backup folder will be moved to AWS S3 bucket daily at this time." />
 
-                        <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3">
-                            <CheckBox x:Name="chkDelete" Margin="15, 5, 0, 0" IsChecked="{Binding AWSS3.DeleteAfterBackup, Mode=TwoWay}">
-                                <Label Margin="0, -2, 0, 0" Content="Delete files from local folder after successful backup to AWS S3" />
+                        <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="4">
+                            <CheckBox x:Name="chkCompress" Margin="15, 5, 0, 0" IsChecked="{Binding AWSS3.CompressBeforeUpload, Mode=TwoWay}">
+                                <Label Margin="0, -2, 0, 0" Content="Compress file before uploading" />
                             </CheckBox>
-                            
                         </StackPanel>
 
-                        <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+                        <StackPanel Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="4">
+                            <CheckBox x:Name="chkDelete" Margin="15, 5, 0, 0" IsChecked="{Binding AWSS3.DeleteAfterBackup, Mode=TwoWay}">
+                                <Label Margin="0, -2, 0, 0" Content="Delete files from local folder after successful backup to AWS S3" />
+                            </CheckBox>                            
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal">
                             <Button x:Name="btnValidateAWS" Margin="15, 0, 0, 0" VerticalAlignment="Center" HorizontalAlignment="Left" Click="btnValidateAws_Click" Foreground="White">Validate and Save</Button>
                             <Label Margin="10, 0, 0, 0" Content="{Binding MessageAWS}" />
                         </StackPanel>

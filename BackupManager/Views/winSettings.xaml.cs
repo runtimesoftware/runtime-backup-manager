@@ -132,6 +132,10 @@ namespace BackupManager
                     MSSQLList.ForEach(a => a.BackupTime = a._backuptime.ToString("HH:mm"));
                     MSSQLList.ForEach(a => a.LastBackup = a._lastBackup == null ? "Never" : ((DateTime)a._lastBackup).ToString("MMM dd, yyyy HH:mm"));
                 }
+                else
+                {
+                    MSSQLList = new List<DatabaseViewModel>();
+                }
             }
             catch (Exception ex)
             {
@@ -216,6 +220,10 @@ namespace BackupManager
                     MySQLList.ForEach(a => a.BackupTime = a._backuptime.ToString("HH:mm"));
                     MySQLList.ForEach(a => a.LastBackup = a._lastBackup == null ? "Never" : ((DateTime)a._lastBackup).ToString("MMM dd, yyyy HH:mm"));
                 }
+                else
+                {
+                    MySQLList = new List<DatabaseViewModel>();
+                }
             }
             catch (Exception ex)
             {
@@ -297,6 +305,10 @@ namespace BackupManager
 
                     FolderList.ForEach(a => a.BackupTime = a._backuptime.ToString("HH:mm"));
                     FolderList.ForEach(a => a.LastBackup = a._lastBackup == null ? "Never" : ((DateTime)a._lastBackup).ToString("MMM dd, yyyy HH:mm"));
+                }
+                else
+                {
+                    FolderList = new List<FolderViewModel>();
                 }
             }
             catch (Exception ex)
@@ -436,6 +448,15 @@ namespace BackupManager
                 return;
             }
 
+            if (!string.IsNullOrWhiteSpace(AWSS3.FolderName))
+            {
+                if (AWSS3.FolderName.Contains("\\"))
+                {
+                    MessageAWS = "Folder name should not contain back slashes (\\). Use forward slash (/) to specify sub-folders";
+                    return;
+                }
+            }
+
             if (string.IsNullOrWhiteSpace(AWSS3.AccessKeyId))
             {
                 MessageAWS = "Access Key Id cannot be empty";
@@ -468,17 +489,17 @@ namespace BackupManager
                 File.WriteAllText(tmpFile, "File created to check write access to this bucket.");
 
                 //Try uploading a file to S3
-                AWSS3Helper helper = new AWSS3Helper(AWSS3.AccessKeyId, AWSS3.AccessSecretKey, AWSS3.AWSRegion, AWSS3.BucketName);
+                AWSS3Helper helper = new AWSS3Helper(AWSS3.AccessKeyId, AWSS3.AccessSecretKey, AWSS3.AWSRegion, AWSS3.BucketName, AWSS3.FolderName);
 
                 MessageAWS = "Please wait while testing access to '" + AWSS3.BucketName + "' ...";
 
                 btnValidateAWS.IsEnabled = false;
-                AWSS3.IsValid = await helper.UploadToS3Async(tmpFile, false);
+                AWSS3.IsValid = await helper.UploadToS3Async(tmpFile);
                 btnValidateAWS.IsEnabled = true;
 
                 if (AWSS3.IsValid == false)
                 {
-                    MessageAWS = "AWS S3 acces check failed. Settings were still saved.";
+                    MessageAWS = "AWS S3 access check failed. Settings were still saved.";
                     MessageBox.Show("Could not upload to specified AWS bucket.\n" + helper.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 

@@ -6,8 +6,8 @@ AppPublisher=Runtime Software Private Limited
 AppPublisherURL=https://www.runtimesoftware.in/
 AppSupportURL=https://www.runtimesoftware.in/
 AppUpdatesURL=https://www.runtimesoftware.in/
-AppVersion=1.0.5
-AppVerName=1.0.5
+AppVersion=1.1
+AppVerName=1.1
 Compression=lzma
 DefaultDirName={pf}\Runtime Software\Runtime Backup Manager
 DisableDirPage=no
@@ -16,7 +16,6 @@ DisableProgramGroupPage=yes
 OutputDir=bin
 OutputBaseFilename=rbm_setup
 SolidCompression=yes
-SignTool=signtool
 UninstallDisplayIcon={app}\rbm.exe
 UninstallDisplayName=Runtime Backup Manager
 PrivilegesRequired=admin
@@ -48,6 +47,7 @@ Source: "src\rbs.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\rbs.exe.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\Renci.SshNet.dll"; DestDir: "{app}";
 Source: "src\System.Buffers.dll"; DestDir: "{app}";
+Source: "src\System.IO.Compression.dll"; DestDir: "{app}";
 Source: "src\System.Memory.dll"; DestDir: "{app}";
 Source: "src\System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{app}";
 Source: "src\Ubiety.Dns.Core.dll"; DestDir: "{app}";

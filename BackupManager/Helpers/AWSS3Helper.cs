@@ -5,6 +5,7 @@ using BackupManager.Model;
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.IO.Compression;
 using System.Threading.Tasks;
 
 namespace BackupManager.Helpers
@@ -27,12 +28,13 @@ namespace BackupManager.Helpers
         /// <param name="_secretKey"></param>
         /// <param name="_awsRegion"></param>
         /// <param name="_bucketName"></param>
-        public AWSS3Helper(string _accessKeyId, string _secretKey, string _awsRegion, string _bucketName)
+        public AWSS3Helper(string _accessKeyId, string _secretKey, string _awsRegion, string _bucketName, string _folderName)
         {
             AccessKeyId = _accessKeyId;
             SecretKey = _secretKey;
             AwsRegion = _awsRegion;
             BucketName = _bucketName;
+            FolderName = _folderName;
         }
 
         /// <summary>
@@ -51,8 +53,9 @@ namespace BackupManager.Helpers
                 return setting;
 
             }
-            catch //(Exception ex)
+            catch (Exception ex)
             {
+                LogHelper.LogMessage("error", "Unable to load AWS S3 Settings | " + Functions.GetErrorFromException(ex));
                 return null;
             }
         }
@@ -81,8 +84,9 @@ namespace BackupManager.Helpers
         readonly string SecretKey;
         readonly string AwsRegion;
         readonly string BucketName;
+        readonly string FolderName;
 
-        public async Task<bool> UploadToS3Async(string sourceFile, bool deleteAfterUpload)
+        public async Task<bool> UploadToS3Async(string sourceFile, bool compressBeforeUpload = false, bool deleteAfterUpload = false)
         {
 
             try
@@ -100,12 +104,38 @@ namespace BackupManager.Helpers
                     return false;
                 }
 
-                request.BucketName = BucketName; 
-                request.Key = Path.GetFileName(sourceFile);
-                request.FilePath = sourceFile;
+                string fileToUpload = sourceFile;
+                if (compressBeforeUpload)
+                {
+                    //save zip at temporary location
+                    string zipPath = Path.Combine(EnVar.AppTempPath, Path.GetFileName(sourceFile) + ".zip");
+                    FileStream zipStream = new FileStream(zipPath, FileMode.Create);
+                    using (ZipArchive zipFile = new ZipArchive(zipStream, ZipArchiveMode.Create))
+                    {
+                        var zipEntry = zipFile.CreateEntry(sourceFile);
+                    }
+                    fileToUpload = zipPath;
+                }
+
+                string BucketPath = BucketName;
+                if (!string.IsNullOrWhiteSpace(FolderName))
+                {
+                    string folderName = FolderName;
+                    folderName = folderName.Replace("%Y%", DateTime.UtcNow.Year.ToString());
+                    folderName = folderName.Replace("%M%", DateTime.UtcNow.Month.ToString());
+                    folderName = folderName.Replace("%D%", DateTime.UtcNow.Day.ToString());
+                    BucketPath += "/" + folderName;
+                }
+
+                request.BucketName = BucketPath; 
+                request.Key = Path.GetFileName(fileToUpload);
+                request.FilePath = fileToUpload;
                 await utility.UploadAsync(request);
 
-                //delete files that are 3 days or more older (this will retain last 3 days backups on disk)
+                //delete zip archive (if compression active)
+                if (compressBeforeUpload) File.Delete(fileToUpload);
+
+                //delete files after upload (if configured)
                 if (deleteAfterUpload == true) File.Delete(sourceFile);
 
                 Message = "File successfully uploaded";

@@ -1,6 +1,7 @@
 ﻿using BackupManager.Classes;
 using BackupManager.Model;
 using Newtonsoft.Json;
+using System;
 using System.IO;
 
 namespace BackupManager.Helpers
@@ -24,8 +25,9 @@ namespace BackupManager.Helpers
                 return setting;
 
             }
-            catch //(Exception ex)
+            catch (Exception ex)
             {
+                LogHelper.LogMessage("error", "Unable to load General Settings | " + Functions.GetErrorFromException(ex));
                 return null;
             }
         }
