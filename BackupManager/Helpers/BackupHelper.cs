@@ -85,7 +85,7 @@ namespace BackupManager.Helpers
 
                             MSSQLHelper sqlBackupHelper = new MSSQLHelper(backup.ServerName, backup.DatabaseName, backup.Username, backup.Password);
                             string fileName = Path.Combine(generalSetting.LocalFolder, DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + "_" + backup.DatabaseName + ".bak");
-                            bool Result = await sqlBackupHelper.ExceuteCommand("BACKUP DATABASE " + backup.DatabaseName + " TO DISK=@filename", 
+                            bool Result = await sqlBackupHelper.ExceuteCommand("BACKUP DATABASE '" + backup.DatabaseName + "' TO DISK=@filename", 
                                           new System.Data.SqlClient.SqlParameter[] { new System.Data.SqlClient.SqlParameter { ParameterName = "@filename", Value = fileName} });
 
                             if (Result == true)
